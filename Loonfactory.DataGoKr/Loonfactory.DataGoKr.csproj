@@ -9,6 +9,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<IsPackable>true</IsPackable>
 		<OutputType>Library</OutputType>
+		<VersionPrefix>1.0.2</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -2,15 +2,14 @@
 
 namespace Loonfactory.DataGoKr.AirKorea;
 
-public class AirPollutionInfoInquiryService
+public class AirPollutionInfoInquiryService : IAirPollutionInfoInquiryService
 {
-    private readonly DataGoKrHandlerProvider<DataGoKrOptions> _handlerProvider;
+    private readonly IDataGoKrHandlerProvider<DataGoKrOptions> _handlerProvider;
 
-    public AirPollutionInfoInquiryService(DataGoKrHandlerProvider<DataGoKrOptions> handlerProvider)
+    public AirPollutionInfoInquiryService(IDataGoKrHandlerProvider<DataGoKrOptions> handlerProvider)
     {
         _handlerProvider = handlerProvider;
     }
-
 
     public async ValueTask<AirInfoByProvinceResponse> GetAirInfoByProvinceAsync(AirPollutionInfoByProvinceProperties properties)
     {

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Loonfactory.DataGoKr;
+﻿namespace Loonfactory.DataGoKr;
 
 public class DataGoKrBuilder
 {
