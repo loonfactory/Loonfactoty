@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Loonfactory.DataGoKr;
 
@@ -55,7 +48,7 @@ public class DataGoKrHandler
 
         var searchPair = search
             .Where(pair => pair.Value != null)
-            .Select(pair => $"{JsonNamingPolicy.CamelCase.ConvertName(pair.Key)}={UrlEncoder.Encode(pair.Value!)}");           
+            .Select(pair => $"{JsonNamingPolicy.CamelCase.ConvertName(pair.Key)}={UrlEncoder.Encode(pair.Value!)}");
 
         return $"{requestUrl}?{string.Join("&", searchPair)}";
     }
@@ -70,7 +63,7 @@ public class DataGoKrHandler
     }
 
     public Task<HttpResponseMessage> GetAsync(
-        [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, 
+        [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri,
         Dictionary<string, string?>? search)
     {
         ArgumentNullException.ThrowIfNull(requestUri, nameof(requestUri));
@@ -95,7 +88,7 @@ public class DataGoKrHandler
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(requestUri, nameof(requestUri));
-           
+
         return Backchannel.GetAsync(BuildUrl(requestUri, search), cancellationToken);
     }
 }

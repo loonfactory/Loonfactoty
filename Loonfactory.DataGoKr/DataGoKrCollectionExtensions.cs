@@ -16,7 +16,7 @@ public static class DataGoKrCollectionExtensions
         services.TryAddScoped<IDataGoKrHandlerProvider, DataGoKrHandlerProvider>();
 
         services.TryAddSingleton<ISystemClock, SystemClock>();
-                
+
         services.TryAddEnumerable(ServiceDescriptor.Scoped<IPostConfigureOptions<DataGoKrOptions>, DataGoKrPostConfigureOptions<DataGoKrOptions>>());
 
         return new DataGoKrBuilder(services);
