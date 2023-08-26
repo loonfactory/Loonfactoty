@@ -14,7 +14,10 @@ public class AirQalityInquiryService : IAirQalityInquiryService
         _handlerProvider = handlerProvider;
         _serializerOptions = new JsonSerializerOptions
         {
-            Converters = { new AirKoeraJsonConverter<AirQalityByProvince>(), new AirKoeraJsonConverter<AirQalityStatistics>() },
+            Converters = {
+                new AirKoeraJsonConverter<AirQalityByProvince>(),
+                new AirKoeraJsonConverter<AirQalityStatistics>()
+            },
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
@@ -85,7 +88,6 @@ public class AirQalityInquiryService : IAirQalityInquiryService
         return (await result.Content.ReadFromJsonAsync<AirQalityStatisticsResponse>(_serializerOptions, cancellationToken: token))!;
     }
 }
-
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(AirQalityByProvinceResponse))]

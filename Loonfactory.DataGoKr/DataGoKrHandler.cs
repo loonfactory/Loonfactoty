@@ -71,8 +71,6 @@ public class DataGoKrHandler
         return GetAsync(requestUri, search, CancellationToken.None);
     }
 
-
-
     public Task<HttpResponseMessage> GetAsync(
         [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri,
         CancellationToken cancellationToken)
