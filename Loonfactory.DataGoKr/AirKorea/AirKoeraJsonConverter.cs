@@ -1,26 +1,22 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Loonfactory.DataGoKr.AirKorea;
 
-public class AirKoeraJsonConverter : JsonConverter<AirInfoByProvince>
+public class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
 {
-    public override AirInfoByProvince? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
             throw new JsonException();
         }
 
-        var data = new AirInfoByProvince();
-        var type = typeof(AirInfoByProvince);
+        var data = new T();
+        var type = typeof(T);
 
         while (reader.Read())
         {
@@ -55,12 +51,12 @@ public class AirKoeraJsonConverter : JsonConverter<AirInfoByProvince>
 
                 if (property == null)
                 {
-                    throw new JsonException($"Unable to convert \"{propertyName}\" to {nameof(AirInfoByProvince)}.");
+                    throw new JsonException($"Unable to convert \"{propertyName}\" to {type.Name}.");
                 }
             }
             catch (AmbiguousMatchException)
             {
-                throw new JsonException($"Unable to convert \"{propertyName}\" to {nameof(AirInfoByProvince)}.");
+                throw new JsonException($"Unable to convert \"{propertyName}\" to {type.Name}.");
             }
 
             // Get the value.
@@ -69,7 +65,7 @@ public class AirKoeraJsonConverter : JsonConverter<AirInfoByProvince>
             var propertyType = property.PropertyType;
             object? value;
 
-            if (propertyType == typeof(DateTime))
+            if (propertyType == typeof(DateTime) || propertyType == typeof(DateTime?))
             {
                 if (!DateTime.TryParseExact(reader.GetString(), "yyyy-MM-dd HH:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out var time))
                 {
@@ -106,7 +102,7 @@ public class AirKoeraJsonConverter : JsonConverter<AirInfoByProvince>
         throw new JsonException();
     }
 
-    public override void Write(Utf8JsonWriter writer, AirInfoByProvince value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }

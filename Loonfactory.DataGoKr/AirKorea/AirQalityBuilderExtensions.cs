@@ -2,7 +2,7 @@
 
 namespace Loonfactory.DataGoKr.AirKorea;
 
-public static class AirPollutionBuilderExtensions
+public static class AirQalityBuilderExtensions
 {
     public static DataGoKrBuilder AddAirPollution(this DataGoKrBuilder builder)
     {
@@ -11,7 +11,7 @@ public static class AirPollutionBuilderExtensions
             throw new ArgumentNullException(nameof(builder));
         }
 
-        builder.Services.TryAddScoped<IAirPollutionInfoInquiryService, AirPollutionInfoInquiryService>();
+        builder.Services.TryAddScoped<IAirQalityInquiryService, AirQalityInquiryService>();
         return builder;
     }
 }

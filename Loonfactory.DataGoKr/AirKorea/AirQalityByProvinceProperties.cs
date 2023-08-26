@@ -1,6 +1,6 @@
 ﻿namespace Loonfactory.DataGoKr.AirKorea
 {
-    public class AirPollutionInfoByProvinceProperties
+    public class AirQalityByProvinceProperties
     {
         public string? ReturnType { get; set; } = "json";
         public int? NumOfRows { get; set; }
