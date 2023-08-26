@@ -1,7 +1,7 @@
 ﻿namespace Loonfactory.DataGoKr
 {
-    public interface IDataGoKrHandlerProvider<TOptions> where TOptions : DataGoKrOptions, new()
+    public interface IDataGoKrHandlerProvider
     {
-        Task<DataGoKrHandler<TOptions>?> GetHandlerAsync();
+        Task<DataGoKrHandler?> GetHandlerAsync();
     }
 }

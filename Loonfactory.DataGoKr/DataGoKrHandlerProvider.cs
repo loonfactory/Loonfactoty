@@ -1,8 +1,8 @@
 ﻿namespace Loonfactory.DataGoKr;
 
-public class DataGoKrHandlerProvider<TOptions> : IDataGoKrHandlerProvider<TOptions> where TOptions : DataGoKrOptions, new()
+public class DataGoKrHandlerProvider : IDataGoKrHandlerProvider
 {
-    private DataGoKrHandler<TOptions>? _handler = null;
+    private DataGoKrHandler? _handler = null;
 
     private IServiceProvider _serviceProvider;
 
@@ -15,16 +15,16 @@ public class DataGoKrHandlerProvider<TOptions> : IDataGoKrHandlerProvider<TOptio
     /// Returns the handler instance that will be used.
     /// </summary>
     /// <returns>The handler instance.</returns>
-    public async Task<DataGoKrHandler<TOptions>?> GetHandlerAsync()
+    public async Task<DataGoKrHandler?> GetHandlerAsync()
     {
         if (_handler != null)
         {
             return _handler;
         }
 
-        var handler = (_serviceProvider.GetService(typeof(DataGoKrHandler<TOptions>)) ??
-            ActivatorUtilities.CreateInstance(_serviceProvider, typeof(DataGoKrHandler<TOptions>)))
-            as DataGoKrHandler<TOptions>;
+        var handler = (_serviceProvider.GetService(typeof(DataGoKrHandler)) ??
+            ActivatorUtilities.CreateInstance(_serviceProvider, typeof(DataGoKrHandler)))
+            as DataGoKrHandler;
 
         if (handler != null)
         {

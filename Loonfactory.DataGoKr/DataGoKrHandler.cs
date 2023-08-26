@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Loonfactory.DataGoKr;
 
-public class DataGoKrHandler<TOptions> where TOptions : DataGoKrOptions, new()
+public class DataGoKrHandler
 {
-    public TOptions Options { get; private set; } = default!;
+    public DataGoKrOptions Options { get; private set; } = default!;
 
-    protected IOptionsSnapshot<TOptions> OptionsSnapshot { get; }
+    protected IOptionsSnapshot<DataGoKrOptions> OptionsSnapshot { get; }
 
     public ILogger Logger { get; }
 
@@ -27,17 +27,16 @@ public class DataGoKrHandler<TOptions> where TOptions : DataGoKrOptions, new()
 
     protected ISystemClock Clock { get; }
 
-    protected DataGoKrHandler(
-        IOptionsSnapshot<TOptions> optionsSnapshot,
+    public DataGoKrHandler(
+        IOptionsSnapshot<DataGoKrOptions> optionsSnapshot,
         ILoggerFactory logger,
-        UrlEncoder encoder,
         ISystemClock clock
     )
     {
         OptionsSnapshot = optionsSnapshot;
         Logger = logger.CreateLogger(GetType().FullName!);
-        UrlEncoder = encoder;
         Clock = clock;
+        UrlEncoder = UrlEncoder.Default;
     }
 
     public Task InitializeAsync()
@@ -56,9 +55,9 @@ public class DataGoKrHandler<TOptions> where TOptions : DataGoKrOptions, new()
 
         var searchPair = search
             .Where(pair => pair.Value != null)
-            .Select(pair => $"{JsonNamingPolicy.CamelCase.ConvertName(pair.Key)}={UrlEncoder.Encode(pair.Value!)}");
+            .Select(pair => $"{JsonNamingPolicy.CamelCase.ConvertName(pair.Key)}={UrlEncoder.Encode(pair.Value!)}");           
 
-        return $"{requestUrl}?{string.Join(",", searchPair)}";
+        return $"{requestUrl}?{string.Join("&", searchPair)}";
     }
 
 
@@ -96,7 +95,7 @@ public class DataGoKrHandler<TOptions> where TOptions : DataGoKrOptions, new()
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(requestUri, nameof(requestUri));
-
+           
         return Backchannel.GetAsync(BuildUrl(requestUri, search), cancellationToken);
     }
 }
