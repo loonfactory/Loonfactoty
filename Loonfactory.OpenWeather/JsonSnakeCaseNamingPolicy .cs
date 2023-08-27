@@ -17,7 +17,7 @@ internal sealed class JsonSnakeCaseNamingPolicy : JsonNamingPolicy
         if (char.IsUpper(name[0])) builder.Append(char.ToLowerInvariant(name[0]));
         else builder.Append(name[0]);
 
-        for (int i = 0; i < name.Length; i++)
+        for (int i = 1; i < name.Length; i++)
         {
             if (char.IsUpper(name[i]) || char.IsWhiteSpace(name[i]))
             {

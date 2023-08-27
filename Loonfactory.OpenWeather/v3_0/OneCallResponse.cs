@@ -8,7 +8,7 @@ public class OneCallResponse
     
     public string Timezone { get; set; } = default!;
     
-    public string TimezoneOffset { get; set; } = default!;
+    public long TimezoneOffset { get; set; } = default!;
 
     public OneCallResponseCurrent Current { get; set; } = default!;
 }

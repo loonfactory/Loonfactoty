@@ -6,7 +6,7 @@ namespace Loonfactory.OpenWeather.v3_0;
 
 public static class OpenWeatherCollectionExtensions
 {
-    public static OpenWeatherBuilder AddDataGoKr(this IServiceCollection services)
+    public static OpenWeatherBuilder AddOpenWeather(this IServiceCollection services)
     {
         if (services == null)
         {
@@ -14,6 +14,7 @@ public static class OpenWeatherCollectionExtensions
         }
 
         services.TryAddScoped<IOpenWeatherHandlerProvider, OpenWeatherHandlerProvider>();
+        services.TryAddScoped<IOpenWeatherService, OpenWeatherService>();
 
         services.TryAddSingleton<ISystemClock, SystemClock>();
 

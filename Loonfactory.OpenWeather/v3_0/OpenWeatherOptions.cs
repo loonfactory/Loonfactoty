@@ -16,7 +16,7 @@ public class OpenWeatherOptions
     {
         if (string.IsNullOrEmpty(ApiKey))
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Exception_OptionMustBeProvided, nameof(ServiceKey)), nameof(ServiceKey));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Exception_OptionMustBeProvided, nameof(ApiKey)), nameof(ApiKey));
         }
     }
 }

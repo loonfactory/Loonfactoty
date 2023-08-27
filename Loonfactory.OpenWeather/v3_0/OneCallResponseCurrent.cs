@@ -39,5 +39,5 @@ public class OneCallResponseCurrent
     public double WindDeg { get; set; }
     public double Rain { get; set; }
     public double Snow { get; set; }
-    public OneCallResponseCurrentwWather Weather { get; set; } = default!;
+    public IEnumerable<OneCallResponseWeather> Weather { get; set; } = default!;
 }

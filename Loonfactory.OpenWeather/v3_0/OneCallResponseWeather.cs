@@ -1,6 +1,6 @@
 ﻿namespace Loonfactory.OpenWeather.v3_0;
 
-public class OneCallResponseCurrentwWather
+public class OneCallResponseWeather
 {
     public int Id { get; set; }
     public string Main { get; set; } = default!;

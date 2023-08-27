@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Loonfactory.OpenWeather.v3_0;
 
-public class OpenWeatherService
+public class OpenWeatherService : IOpenWeatherService
 {
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly IOpenWeatherHandlerProvider _handlerProvider;
@@ -17,7 +17,6 @@ public class OpenWeatherService
         };
         _handlerProvider = handlerProvider;
     }
-
 
     public ValueTask<OneCallResponse> GetOneCallAsync(OneCallProperties properties)
     {
