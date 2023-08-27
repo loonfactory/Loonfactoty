@@ -77,13 +77,13 @@ public class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
             else if (propertyType == typeof(int?) || propertyType == typeof(int))
             {
                 var v = reader.GetString();
-                if (v == "-" || v == null) value = null;
+                if (v == "-" || string.IsNullOrWhiteSpace(v)) value = null;
                 else value = int.Parse(v);
             }
             else if (propertyType == typeof(double?) || propertyType == typeof(double))
             {
                 var v = reader.GetString();
-                if (v == "-" || v == null) value = null;
+                if (v == "-" || string.IsNullOrWhiteSpace(v)) value = null;
                 else value = double.Parse(v);
             }
             else if (propertyType == typeof(string))
