@@ -1,7 +1,5 @@
-using Loonfactory.DataGoKr;
 using Loonfactory.DataGoKr.AirKorea;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace Loonfactory.DataGoKr.Test;
 
@@ -17,6 +15,6 @@ public class DataGoKrTest
         builder.Services.AddDataGoKr()
                         .AddAirPollution();
 
-        builder.Build();        
+        builder.Build();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -90,7 +89,7 @@ public partial class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class
                     {
                         day += hour / 24;
                         hour %= 24;
-                    }                    
+                    }
 
 
                     var date = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Utc);
