@@ -3,11 +3,14 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Loonfactory.DataGoKr.AirKorea;
 
-public class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
+public partial class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
 {
+    Regex DateFomratRegex { get; init; } = GeneratedDateFomratRegex();
+
     public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartObject)
@@ -67,12 +70,40 @@ public class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
 
             if (propertyType == typeof(DateTime) || propertyType == typeof(DateTime?))
             {
-                if (!DateTime.TryParseExact(reader.GetString(), "yyyy-MM-dd HH:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out var time))
+                var dateRow = reader.GetString();
+                if (dateRow == null || !DateFomratRegex.IsMatch(dateRow))
                 {
-                    throw new JsonException();
+                    throw new JsonException(
+                        $"Cannot parse '{dateRow}' in 'yyyy-MM-dd HH:mm' Datetime format. Property name: '{propertyName}'");
                 }
 
-                value = time;
+                var match = DateFomratRegex.Match(dateRow);
+                try
+                {
+                    var year = int.Parse(match.Groups[1].Value);
+                    var month = int.Parse(match.Groups[2].Value);
+                    var day = int.Parse(match.Groups[3].Value);
+                    var hour = int.Parse(match.Groups[4].Value);
+                    var minute = int.Parse(match.Groups[5].Value);
+
+                    if (hour == 24)
+                    {
+                        day += hour / 24;
+                        hour %= 24;
+                    }                    
+
+
+                    var date = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Utc);
+                    // KST(Asia/Seoul) UTC+09:00
+                    date.AddHours(-9);
+
+                    value = date;
+                }
+                catch (Exception)
+                {
+                    throw new JsonException(
+                        $"Cannot parse '{dateRow}' in 'yyyy-MM-dd HH:mm' Datetime format. Property name: '{propertyName}'");
+                }
             }
             else if (propertyType == typeof(int?) || propertyType == typeof(int))
             {
@@ -106,4 +137,7 @@ public class AirKoeraJsonConverter<T> : JsonConverter<T> where T : class, new()
     {
         throw new NotImplementedException();
     }
+
+    [GeneratedRegex("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})")]
+    private static partial Regex GeneratedDateFomratRegex();
 }

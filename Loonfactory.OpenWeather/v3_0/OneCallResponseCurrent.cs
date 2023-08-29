@@ -35,9 +35,9 @@ public class OneCallResponseCurrent
     public double Uvi { get; set; }
     public double Visibility { get; set; }
     public double WindSpeed { get; set; }
-    public double WindGust { get; set; }
+    public double? WindGust { get; set; }
     public double WindDeg { get; set; }
-    public double Rain { get; set; }
-    public double Snow { get; set; }
+    public Fall? Rain { get; set; }
+    public Fall? Snow { get; set; }
     public IEnumerable<OneCallResponseWeather> Weather { get; set; } = default!;
 }
