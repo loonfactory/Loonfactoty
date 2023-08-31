@@ -27,6 +27,7 @@ public class DataGoKrHandler
     )
     {
         OptionsSnapshot = optionsSnapshot;
+        
         Logger = logger.CreateLogger(GetType().FullName!);
         Clock = clock;
         UrlEncoder = UrlEncoder.Default;
@@ -87,6 +88,8 @@ public class DataGoKrHandler
     {
         ArgumentNullException.ThrowIfNull(requestUri, nameof(requestUri));
 
-        return Backchannel.GetAsync(BuildUrl(requestUri, search), cancellationToken);
+        return Backchannel.GetAsync(
+            BuildUrl(requestUri, search),
+            cancellationToken);
     }
 }

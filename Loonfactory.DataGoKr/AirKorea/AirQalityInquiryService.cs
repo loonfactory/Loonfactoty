@@ -85,7 +85,8 @@ public class AirQalityInquiryService : IAirQalityInquiryService
             throw;
         }
 
-        return (await result.Content.ReadFromJsonAsync<AirQalityStatisticsResponse>(_serializerOptions, cancellationToken: token))!;
+        var data = await result.Content.ReadAsStringAsync(token);
+        return JsonSerializer.Deserialize<AirQalityStatisticsResponse>(data, _serializerOptions)!;
     }
 }
 
