@@ -9,7 +9,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<IsPackable>true</IsPackable>
 		<OutputType>Library</OutputType>
-		<VersionPrefix>1.0.7</VersionPrefix>
+		<VersionPrefix>1.0.8</VersionPrefix>
 		<UserSecretsId>307f1dc1-d99d-4bc0-9c95-072455c3e5ae</UserSecretsId>
 	</PropertyGroup>
 

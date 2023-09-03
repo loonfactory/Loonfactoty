@@ -11,7 +11,7 @@ public static class AirQalityBuilderExtensions
             throw new ArgumentNullException(nameof(builder));
         }
 
-        builder.Services.TryAddScoped<IAirQalityInquiryService, AirQalityInquiryService>();
+        builder.Services.TryAddScoped<IAirQalityInquiryService, AirQalityService>();
         return builder;
     }
 }

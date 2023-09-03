@@ -1,15 +1,16 @@
-﻿using System.Text.Encodings.Web;
+﻿using System.Data;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Loonfactory.DataGoKr.AirKorea;
 
-public class AirQalityInquiryService : IAirQalityInquiryService
+public class AirQalityService : IAirQalityInquiryService
 {
     private readonly IDataGoKrHandlerProvider _handlerProvider;
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public AirQalityInquiryService(IDataGoKrHandlerProvider handlerProvider)
+    public AirQalityService(IDataGoKrHandlerProvider handlerProvider)
     {
         _handlerProvider = handlerProvider;
         _serializerOptions = new JsonSerializerOptions
@@ -86,6 +87,11 @@ public class AirQalityInquiryService : IAirQalityInquiryService
         }
 
         var data = await result.Content.ReadAsStringAsync(token);
+        if (data[0] != '{')
+        {
+            throw new Exception(data);
+        }
+
         return JsonSerializer.Deserialize<AirQalityStatisticsResponse>(data, _serializerOptions)!;
     }
 }
