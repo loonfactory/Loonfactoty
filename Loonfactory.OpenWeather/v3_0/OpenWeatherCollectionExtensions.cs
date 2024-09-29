@@ -6,7 +6,7 @@ namespace Loonfactory.OpenWeather.v3_0;
 
 public static class OpenWeatherCollectionExtensions
 {
-    public static OpenWeatherBuilder AddOpenWeather(this IServiceCollection services)
+    public static OpenWeatherBuilder AddOpenWeather(this IServiceCollection services, Action<OpenWeatherOptions> configureOptions)
     {
         if (services == null)
         {
@@ -17,8 +17,17 @@ public static class OpenWeatherCollectionExtensions
         services.TryAddScoped<IOpenWeatherService, OpenWeatherService>();
 
         services.TryAddSingleton<ISystemClock, SystemClock>();
+        
+        if (configureOptions != null)
+        {
+            services.Configure(configureOptions);
+        }
 
-        services.TryAddEnumerable(ServiceDescriptor.Scoped<IPostConfigureOptions<OpenWeatherOptions>, OpenWeatherPostConfigureOptions<OpenWeatherOptions>>());
+        services.AddOptions<OpenWeatherOptions>().Validate(o =>
+        {
+            o.Validate();
+            return true;
+        });
 
         return new OpenWeatherBuilder(services);
     }
